@@ -3,17 +3,27 @@
   <tbody>
     <tr><td>Filter By -&nbsp;</td></tr>
     <tr>
-      <td>Game Name :</td>
+      <td>Platform :</td>
       <td>
-          <select name="game-name" style="margin-top:10px;">
-            <option value="">Select a game</option>
+          <select name="game-platform" style="margin-top:10px;">
+            <option value="All">All Platforms</option>
+            <% unless @platform_list.nil? %>
+                <% @platform_list.each_with_index do |record, index| %>
+                    <option value="<%= record[0] %>"><%= record[1] %></option>
+                <% end %>
+            <% end %> 
           </select>
       </td>
       <td><span style="padding-left:5em;padding-right:5em;">AND / OR</span></td>
-      <td>Game Category :</td>
+      <td>Genre :</td>
       <td>
-          <select name="game-category" style="margin-top:10px;">
-            <option value="">Select a category</option>
+          <select name="game-genre" style="margin-top:10px;">
+            <option value="All">All Genres</option>
+            <% unless @genre_list.nil? %>
+                <% @genre_list.each_with_index do |record, index| %>
+                    <option value="<%= record[0] %>"><%= record[0] %></option>
+                <% end %>
+            <% end %> 
           </select>
       </td>
       <td>&nbsp;

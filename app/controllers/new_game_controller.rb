@@ -1,28 +1,47 @@
+require 'json'
+require 'date'
 class NewGameController < ApplicationController
   def index
+   
+    require 'yaml'
+
+    @raw_config = File.read("config/database.yml")
+    @APP_CONFIG = YAML.load(@raw_config)
+
+    ActiveRecord::Base.establish_connection("development")
+
+    @query = "select game_id, games from games;"
+    @game_list = ActiveRecord::Base.connection.execute(@query)
+
   	render :partial => "add_new_game"
   end
   def execute
     begin
 
-    @jsonData = JSON.parse(request.body.read)
-    @query = @jsonData["data"]
+    @data = JSON.parse(request.body.read)
+    @gameTitle = @data["gameTitle"]
+    @price = @data["price"]
+    @purchaseDate = @data["purchaseDate"]
+    @condition = @data["condition"]
+    @completeness = @data["completeness"]
+    @bonus = @data["bonus"]
+    @sell = @data["sell"]
 
- #    require 'yaml'
+    @q = "insert into my_collection values(#{@gameTitle}, #{@price}, '#{@purchaseDate}','#{@condition}','#{@completeness}','#{@bonus}','#{@sell}')"
 
- #    @raw_config = File.read("config/database.yml")
- #    @APP_CONFIG = YAML.load(@raw_config)
+    require 'yaml'
 
- #    ActiveRecord::Base.establish_connection("development")
-	# ActiveRecord::Base.connection.execute(@query)
+    @raw_config = File.read("config/database.yml")
+    @APP_CONFIG = YAML.load(@raw_config)
 
-    @result = { :success => true, :name => 'Mike', :age => 70 }.to_json
+    ActiveRecord::Base.establish_connection("development")
+	  ActiveRecord::Base.connection.execute(@q)
 
-    render :json => @result
+    render :partial => "status"
 
     rescue Exception => exc
        @exception_msg = exc.message
-       render :json => { :success => false, :msg => @exception_msg }.to_json
+       render :partial => "query_results/error"
     end
   end 
 end

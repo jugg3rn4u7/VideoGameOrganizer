@@ -7,9 +7,14 @@ $(document).ready(function() {
 	var BASE_URL = "";
 
 	$( document ).on( "click", "#filter", function(e) {
+		getList();
+	});
 
-		var query = "params";
-		var postData = { query: query };
+	var getList = function() 
+	{
+		var postData = { platform: $("[name='game-platform']").val(), genre: $("[name='game-genre']").val() };
+
+		console.log("filter params : ", JSON.stringify(postData));
 
 		$.ajax({
   	
@@ -25,9 +30,11 @@ $(document).ready(function() {
 			}
 
 		});  
-	  
-	});
+	}
 
-	  
+	setTimeout(function() {
+		getList();
+		clearTimeout();
+	}, 3000);	  
 });
 

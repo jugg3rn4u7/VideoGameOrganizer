@@ -22,7 +22,7 @@ var sections =
 	"My Games" : BASE_URL + "my_games/index?_ts=" + (new Date()).getTime(),
 	"New Game" : BASE_URL + "new_game/index?_ts=" + (new Date()).getTime(),
 	"Query Results" : BASE_URL + "query_results/index?_ts=" + (new Date()).getTime(),
-	"Developers" : BASE_URL + "developers/index?_ts=" + (new Date()).getTime()
+	"About" : BASE_URL + "developers/index?_ts=" + (new Date()).getTime()
 };
 
 $(function() {
